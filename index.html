@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .converter-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            margin: auto;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #28a745;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container converter-container">
+    <h2 class="mb-4"><i class="fas fa-thermometer-half"></i> Temperature Converter</h2>
+    
+    <div class="form-group">
+        <label for="temperature">Temperature:</label>
+        <input type="text" class="form-control" id="temperature" placeholder="Enter temperature" oninput="validateInput()">
+    </div>
+
+    <div class="form-group">
+        <label for="unit">Unit:</label>
+        <select class="form-control" id="unit">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+    </div>
+
+    <button class="btn btn-primary" onclick="convertTemperature()"><i class="fas fa-sync-alt"></i> Convert</button>
+
+    <div id="result" class="mt-4"></div>
+
+    <footer>
+        <p>Designed by Aditya Chakraborty &copy; 2023</p>
+    </footer>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- Font Awesome Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+
+<script>
+    function validateInput() {
+        const inputField = document.getElementById("temperature");
+        const inputValue = inputField.value.trim();
+
+        if (isNaN(inputValue)) {
+            alert("Please enter a valid number for temperature.");
+            inputField.value = "";
+        }
+    }
+
+    function convertTemperature() {
+        const inputField = document.getElementById("temperature");
+        const unitSelector = document.getElementById("unit");
+        const resultArea = document.getElementById("result");
+
+        const inputValue = parseFloat(inputField.value);
+        const selectedUnit = unitSelector.value;
+
+        if (isNaN(inputValue)) {
+            alert("Please enter a valid number for temperature.");
+            inputField.value = "";
+            return;
+        }
+
+        let convertedTemperature;
+        let resultUnit;
+
+        if (selectedUnit === "celsius") {
+            convertedTemperature = (inputValue - 32) * (5 / 9);
+            resultUnit = "Celsius";
+        } else if (selectedUnit === "fahrenheit") {
+            convertedTemperature = (inputValue * 9 / 5) + 32;
+            resultUnit = "Fahrenheit";
+        } else if (selectedUnit === "kelvin") {
+            convertedTemperature = inputValue + 273.15;
+            resultUnit = "Kelvin";
+        }
+
+        resultArea.innerHTML = `<strong><i class="fas fa-thermometer-half"></i> Converted Temperature:</strong> ${convertedTemperature.toFixed(2)} ${resultUnit}`;
+    }
+</script>
+
+</body>
+</html>
